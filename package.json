@@ -2,6 +2,24 @@
   "name": "google-place-autocomplete",
   "version": "0.1.0",
   "private": true,
+  "description": "Best practice with Google Place Autocomplete API on React",
+  "author": "Gapur Kassym",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gapur/google-place-autocomplete.git"
+  },
+  "homepage": "https://github.com/Gapur/google-place-autocomplete/blob/master/README.md",
+  "keywords": [
+    "react",
+    "google-place-api",
+    "google-place-autocomplete",
+    "google",
+    "place",
+    "autocomplete",
+    "javascript",
+    "react-hooks"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

@@ -89,7 +89,7 @@ This method is called when the event is triggered and gets place data from API. 
   <img width="800"src="https://github.com/Gapur/google-place-autocomplete/blob/master/public/result.png">
 </p>
 
-## Blog on Medium
+## Article on Medium
 
 [How to Use Google Place Autocomplete With React Without a Third-Party Library](https://medium.com/better-programming/the-best-practice-with-google-place-autocomplete-api-on-react-939211e8b4ce)
 
