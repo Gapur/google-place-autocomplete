@@ -5,7 +5,5 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-h2 {
-  color: #000;
+  background: #414141;
 }
