@@ -5,7 +5,10 @@ export const ADD_SEARCH = "ADD_SEARCH";
 export function searchPlaces(query) {
   return function (dispatch) {
     fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=geocode&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+      `https://maps.googleapis.com/maps/api/js?key=AIzaSyCtABEXRCga9WoTi_pQ3d8lvvRJXlQ-T9o&libraries=places`,
+      {
+        mode: "no-cors",
+      }
     )
       .then((response) => response.json())
       .then((data) => {

@@ -1,16 +1,18 @@
 import React from "react";
 // import SearchLocationInput from "./SearchLocationInput";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { applyMiddleware } from "redux";
 import { createEpicMiddleware } from "redux-observable";
-import { switchMap, debounceTime } from "rxjs/operators";
-import { of } from "rxjs";
 import { Provider } from "react-redux"; // import Provider component
 import MapContainer from "./MapContainer";
 import SearchBar from "./SearchBar";
 import SearchHistory from "./SearchHistory";
 import SearchResultList from "./SearchResultList";
+import { searchPlaces } from "./actions";
+import { ofType } from "redux-observable";
+import { switchMap, map, catchError } from "rxjs/operators";
+import { from, of } from "rxjs";
 
 import "./App.css";
 const initialState = {
@@ -31,34 +33,31 @@ const reducer = (state = initialState, action) => {
 };
 
 // Define the epic that handles the SEARCH_PLACES action
-const searchPlacesEpic = (action$, state$) =>
-  action$.ofType("SEARCH_PLACES").pipe(
-    debounceTime(500),
-    switchMap((action) =>
-      fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${action.payload}&key=AIzaSyCtABEXRCga9WoTi_pQ3d8lvvRJXlQ-T9o`
+export const searchPlacesEpic = (action$, state$) =>
+  action$.pipe(
+    ofType("SEARCH_PLACES"),
+    switchMap(({ payload }) =>
+      from(
+        fetch(
+          `https://maps.googleapis.com/maps/api/js?key=AIzaSyCtABEXRCga9WoTi_pQ3d8lvvRJXlQ-T9o&libraries=places`,
+          {
+            mode: "no-cors",
+          }
+        )
+      ).pipe(
+        switchMap((response) => response.json()),
+        map((response) => searchPlaces(response)),
+        catchError((error) => of(searchPlaces(error)))
       )
-        .then((response) => response.json())
-        .then((data) =>
-          data.predictions.map((prediction) => ({
-            description: prediction.description,
-            place_id: prediction.place_id,
-          }))
-        )
-        .then((searchResults) =>
-          of({
-            type: "SEARCH_PLACES",
-            payload: searchResults,
-          })
-        )
-        .catch((error) => console.log(error))
     )
   );
 // Create the Redux store and apply the middleware
 const epicMiddleware = createEpicMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(epicMiddleware))
+  // applyMiddleware(thunkMiddleware),
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 // Run the epic middleware
 epicMiddleware.run(searchPlacesEpic);
