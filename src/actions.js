@@ -1,26 +1,30 @@
+import axios from "axios";
 export const SEARCH_PLACES = "SEARCH_PLACES";
 export const RECEIVE_SEARCH_RESULTS = "RECEIVE_SEARCH_RESULTS";
 export const ADD_SEARCH = "ADD_SEARCH";
 
-export function searchPlaces(query) {
-  return function (dispatch) {
-    fetch(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyCtABEXRCga9WoTi_pQ3d8lvvRJXlQ-T9o&libraries=places`,
-      {
-        mode: "no-cors",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const searchResults = data.predictions.map((prediction) => ({
-          place_id: prediction.place_id,
-          description: prediction.description,
-        }));
-        dispatch(receiveSearchResults(searchResults));
-      })
-      .catch((error) => console.log(error));
+export const searchPlaces = (searchText) => {
+  return async (dispatch) => {
+    dispatch({ type: "SEARCH_PLACES_REQUEST" });
+    try {
+      const result = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchText}&key=AIzaSyCtABEXRCga9WoTi_pQ3d8lvvRJXlQ-T9o&libraries=places`,
+        {
+          mode: "cors",
+        }
+      );
+      dispatch({
+        type: "SEARCH_PLACES_SUCCESS",
+        payload: result.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: "SEARCH_PLACES_FAILURE",
+        payload: error.message,
+      });
+    }
   };
-}
+};
 
 export function receiveSearchResults(searchResults) {
   return {

@@ -2,7 +2,7 @@ import React from "react";
 // import SearchLocationInput from "./SearchLocationInput";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+// import { composeWithDevTools } from "redux-devtools-extension";
 import { createEpicMiddleware } from "redux-observable";
 import { Provider } from "react-redux"; // import Provider component
 import MapContainer from "./MapContainer";
