@@ -1,28 +1,50 @@
+
 # Google Place Autocomplete
 
-The best practice with Google Place Autocomplete API on React
+The best practice with Google Place Autocomplete API on React
 
 Using Google Place Autocomplete without third-party library
 
 Autocomplete is a feature of the Places library in the Maps JavaScript API. When a user starts typing an address, autocomplete fills in the rest.
 
-## Setting up the Project
+## Features are on working:
+- Save Search History in client's storage
 
-Move it into the google-place-autocomplete directory and run it from the terminal:
 
+# Features
+## User: 
+   - Search Places
+   - View Search history
+
+   # Getting Started
+   These instructions will get you a copy of the project up and running on   your local machine for development and testing purposes.
+   ## Prerequisites
+   Node.js and npm installed on your local machine
+   ## Installing
+   Clone the repository:
+ ```bash
+  git clone
 ```
-cd google-place-autocomplete
-npm start
+Navigate to the project directory:
+```bash
+  cd google-place-autocomplete
+```
+## Install the dependencies:
+```bash
+  npm install
+```
+Change the Google Maps API Key in SearchLocationInput.js:
+```
+https://maps.googleapis.com/maps/api/js?key=<API_KEY>&libraries=places
 ```
 
-Before we get started, you need the API-Key for the Google Places API. You can get that key [here](https://developers.google.com/maps/documentation/javascript/places-autocomplete). I store Google API Key in the .env file — you should too.
+## Start the development server:
+```bash
+  npm run start
+```
+The application will be available at http://localhost:3000.
 
-## Magic Code
-
-Let’s implement the main SearchLocationInput component to work with the Google Place Autocomplete API. First, we have to create a function to load the script for working with Google API.
-
-I used this script for dynamic JavaScript for fast page speed load on our public pages. It dynamically loads JavaScript files with a callback when finished. Next, we have to assign the Google Place Map to the autoComplete variable when the component is rendered:
-
-Then we attach to the autocomplete listener, which listens for whenever a user selects one of the autocomplete suggestions. Let’s createthe handlePlaceSelect method to handle selection:
-
-This method is called when the event is triggered and gets place data from API. Then we can do any operation with data.
+# Built With
+- ReactJS - JavaScript library for building user interfaces
+- Axios - Promise-based HTTP client for making API requests
+- Google Maps API
